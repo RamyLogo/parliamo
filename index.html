@@ -875,8 +875,8 @@ function saveProfileName(){
 function exportProfile(){
  saveProfileName();
  const payload={
-   app:"Parla con i simboli",
-   formatVersion:1,
+   app:"PARLIAMO",
+   formatVersion:2,
    profileName,
    exportedAt:new Date().toISOString(),
    data:data,
@@ -888,7 +888,10 @@ function exportProfile(){
  const url=URL.createObjectURL(blob);
  const a=document.createElement("a");
  a.href=url;
- a.download="parla-con-i-simboli-"+profileName.replace(/[^a-z0-9_-]+/gi,"_")+".json";
+ const now=new Date();
+ const pad=n=>String(n).padStart(2,"0");
+ const stamp=now.getFullYear()+"-"+pad(now.getMonth()+1)+"-"+pad(now.getDate())+"_"+pad(now.getHours())+"-"+pad(now.getMinutes());
+ a.download="PARLIAMO_"+profileName.replace(/[^a-z0-9_-]+/gi,"_")+"_"+stamp+".json";
  document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
@@ -900,7 +903,7 @@ function importProfileFile(ev){
  r.onload=()=>{
    try{
      const x=JSON.parse(r.result);
-     if(!x || x.app!=="Parla con i simboli" || !x.data)throw new Error();
+     if(!x || (x.app!=="Parla con i simboli" && x.app!=="PARLIAMO") || !x.data)throw new Error();
      data=x.data;
      scenesData=Array.isArray(x.scenes)?x.scenes:[];
      profileName=x.profileName||"UTENTE";
@@ -911,7 +914,9 @@ function importProfileFile(ev){
      if(x.rate!==undefined)localStorage.setItem("pcsRate",x.rate);
      const pn=document.getElementById("profileName");if(pn)pn.value=profileName;
      path=["root"]; inScenes=false; scenesVisible=false; closeScene(); render(); renderSentence();
-     alert("Profilo importato.");
+     let msg="Profilo "+profileName+" importato.";
+     if(x.exportedAt){const d=new Date(x.exportedAt);if(!isNaN(d))msg+="\nEsportato il "+d.toLocaleDateString("it-IT")+" alle "+d.toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"});}
+     alert(msg);
    }catch(e){alert("Il file non è un profilo valido.");}
    ev.target.value="";
  };
