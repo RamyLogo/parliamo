@@ -1,7 +1,4 @@
-const seed=[
- {type:"pic",label:"io",id:2580},{type:"pic",label:"tu",id:2581},{type:"pic",label:"volere",id:7261},
- {type:"pic",label:"mangiare",id:2425},{type:"pic",label:"bere",id:2458},{type:"pic",label:"acqua",id:2485}
-];
+const seed=[{"type":"folder","label":"PERSONE","items":[{"type":"pic","label":"il bimbo","id":7176}],"image":"https://static.arasaac.org/pictograms/7116/7116_500.png","iconPictogramId":7116},{"type":"folder","label":"AZIONI","items":[{"type":"pic","label":"mangia","id":6456}],"image":"https://static.arasaac.org/pictograms/7297/7297_500.png","iconPictogramId":7297},{"type":"folder","label":"GIOCHI","items":[{"type":"pic","id":3241,"label":"palla"},{"type":"pic","id":27612,"label":"palla da bowling"},{"type":"pic","id":2514,"label":"palla da tennis"}],"image":"https://static.arasaac.org/pictograms/9813/9813_500.png"},{"type":"folder","label":"CIBI","items":[{"type":"pic","label":"la pizza","id":2527}],"image":"https://static.arasaac.org/pictograms/4610/4610_500.png","iconPictogramId":4610},{"type":"folder","label":"colori","items":[],"image":"https://static.arasaac.org/pictograms/5968/5968_500.png","iconPictogramId":5968}];
 let data=JSON.parse(localStorage.getItem("pcsData")||"null")||{root:seed}, path=["root"], sentence=[];
 const img=id=>`https://static.arasaac.org/pictograms/${id}/${id}_500.png`;
 function save(){localStorage.setItem("pcsData",JSON.stringify(data))}
