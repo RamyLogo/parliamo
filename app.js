@@ -279,14 +279,14 @@ function exportProfile(){
    voice:localStorage.getItem("pcsVoice")||"",
    rate:localStorage.getItem("pcsRate")||"1"
  };
- const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/octet-stream"});
  const url=URL.createObjectURL(blob);
  const a=document.createElement("a");
  a.href=url;
  const now=new Date();
  const pad=n=>String(n).padStart(2,"0");
  const stamp=now.getFullYear()+"-"+pad(now.getMonth()+1)+"-"+pad(now.getDate())+"_"+pad(now.getHours())+"-"+pad(now.getMinutes());
- a.download="PARLIAMO_"+profileName.replace(/[^a-z0-9_-]+/gi,"_")+"_"+stamp+".json";
+ a.download="PARLIAMO_"+profileName.replace(/[^a-z0-9_-]+/gi,"_")+"_"+stamp+".parliamo";
  document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
